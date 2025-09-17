@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- === Passengers === -->
+    <changeSet id="100" author="you">
+        <insert tableName="passenger">
+            <column name="name" value="Иван"/>
+            <column name="email" value="ivan@example.com"/>
+            <column name="phone" value="+375291234567"/>
+            <column name="deleted" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="passenger">
+            <column name="name" value="Петр"/>
+            <column name="email" value="petr@example.com"/>
+            <column name="phone" value="+375331112233"/>
+            <column name="deleted" valueBoolean="false"/>
+        </insert>
+    </changeSet>
+
+    <!-- === Drivers === -->
+    <changeSet id="101" author="you">
+        <insert tableName="driver">
+            <column name="name" value="Алексей"/>
+            <column name="email" value="alex@example.com"/>
+            <column name="phone" value="+375441234567"/>
+            <column name="deleted" valueBoolean="false"/>
+        </insert>
+
+        <insert tableName="driver">
+            <column name="name" value="Сергей"/>
+            <column name="email" value="sergey@example.com"/>
+            <column name="phone" value="+375251234567"/>
+            <column name="deleted" valueBoolean="false"/>
+        </insert>
+    </changeSet>
+
+    <!-- === Cars === -->
+    <changeSet id="102" author="you">
+        <insert tableName="car">
+            <column name="color" value="Синий"/>
+            <column name="brand" value="Volkswagen"/>
+            <column name="plate_number" value="1234 AB-7"/>
+            <column name="driver_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="car">
+            <column name="color" value="Красный"/>
+            <column name="brand" value="Audi"/>
+            <column name="plate_number" value="5678 CD-7"/>
+            <column name="driver_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <!-- === Trips === -->
+    <changeSet id="103" author="you">
+        <insert tableName="trip">
+            <column name="driver_id" valueNumeric="1"/>
+            <column name="passenger_id" valueNumeric="1"/>
+            <column name="from_address" value="Минск, пр. Независимости 1"/>
+            <column name="to_address" value="Минск, ул. Победителей 50"/>
+            <column name="status" value="CREATED"/>
+            <column name="requested_at" valueDate="2025-09-15T09:00:00"/>
+            <column name="price" valueNumeric="15.50"/>
+        </insert>
+    </changeSet>
+
+    <!-- === Ratings === -->
+    <changeSet id="104" author="you">
+        <insert tableName="rating">
+            <column name="trip_id" valueNumeric="1"/>
+            <column name="driver_id" valueNumeric="1"/>
+            <column name="passenger_id" valueNumeric="1"/>
+            <column name="score" valueNumeric="5"/>
+            <column name="comment" value="Отличная поездка"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

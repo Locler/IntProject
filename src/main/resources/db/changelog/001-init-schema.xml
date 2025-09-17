@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001-create-passenger" author="dev">
+        <createTable tableName="passenger">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)"/>
+            <column name="email" type="VARCHAR(200)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="passenger"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="002-create-driver" author="dev">
+        <createTable tableName="driver">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)"/>
+            <column name="email" type="VARCHAR(200)"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="driver"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="003-create-car" author="dev">
+        <createTable tableName="car">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="driver_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="color" type="VARCHAR(100)"/>
+            <column name="brand" type="VARCHAR(200)"/>
+            <column name="plate_number" type="VARCHAR(50)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="car" baseColumnNames="driver_id"
+                                 referencedTableName="driver" referencedColumnNames="id"
+                                 constraintName="fk_car_driver"/>
+        <rollback>
+            <dropTable tableName="car"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="004-create-trip" author="dev">
+        <createTable tableName="trip">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="driver_id" type="BIGINT"/>
+            <column name="passenger_id" type="BIGINT"/>
+            <column name="from_address" type="VARCHAR(500)"/>
+            <column name="to_address" type="VARCHAR(500)"/>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="requested_at" type="TIMESTAMP"/>
+            <column name="price" type="DECIMAL(10,2)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="trip" baseColumnNames="driver_id"
+                                 referencedTableName="driver" referencedColumnNames="id"
+                                 constraintName="fk_trip_driver"/>
+        <addForeignKeyConstraint baseTableName="trip" baseColumnNames="passenger_id"
+                                 referencedTableName="passenger" referencedColumnNames="id"
+                                 constraintName="fk_trip_passenger"/>
+        <rollback>
+            <dropTable tableName="trip"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="005-create-rating" author="dev">
+        <createTable tableName="rating">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="trip_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="driver_id" type="BIGINT"/>
+            <column name="passenger_id" type="BIGINT"/>
+            <column name="score" type="INT"/>
+            <column name="comment" type="VARCHAR(500)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="rating" baseColumnNames="trip_id"
+                referencedTableName="trip" referencedColumnNames="id"
+                constraintName="fk_rating_trip"/>
+
+        <addForeignKeyConstraint
+                baseTableName="rating" baseColumnNames="driver_id"
+                referencedTableName="driver" referencedColumnNames="id"
+                constraintName="fk_rating_driver"/>
+
+        <addForeignKeyConstraint
+                baseTableName="rating" baseColumnNames="passenger_id"
+                referencedTableName="passenger" referencedColumnNames="id"
+                constraintName="fk_rating_passenger"/>
+    </changeSet>
+
+    <changeSet id="006-indexes" author="dev">
+        <createIndex indexName="idx_passenger_email" tableName="passenger">
+            <column name="email"/>
+        </createIndex>
+        <createIndex indexName="idx_driver_email" tableName="driver">
+            <column name="email"/>
+        </createIndex>
+        <createIndex indexName="idx_car_plate" tableName="car">
+            <column name="plate_number"/>
+        </createIndex>
+        <rollback>
+            <dropIndex indexName="idx_passenger_email" tableName="passenger"/>
+            <dropIndex indexName="idx_driver_email" tableName="driver"/>
+            <dropIndex indexName="idx_car_plate" tableName="car"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
