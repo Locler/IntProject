@@ -20,22 +20,22 @@ public class TripController {
     }
 
     @GetMapping
-    public List<TripDto> getAll() {
+    public List<TripDto> getAllTrips() {
         return service.getAllTrips();
     }
 
     @GetMapping("/{id}")
-    public TripDto getById(@PathVariable Long id) {
+    public TripDto getTripById(@PathVariable Long id) {
         return service.getTripById(id);
     }
 
     @PostMapping
-    public TripDto create(@RequestBody TripDto dto) {
+    public TripDto createTrip(@RequestBody TripDto dto) {
         return service.createTrip(dto);
     }
 
     @PutMapping("/{id}")
-    public TripDto update(@PathVariable Long id, @RequestBody TripDto dto) {
+    public TripDto updateTrip(@PathVariable Long id, @RequestBody TripDto dto) {
         return service.updateTrip(id, dto);
     }
 
@@ -45,7 +45,7 @@ public class TripController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteTrip(@PathVariable Long id) {
         service.deleteTrip(id);
     }
 

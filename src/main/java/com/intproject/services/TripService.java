@@ -32,7 +32,7 @@ public class TripService {
         this.mapper = mapper;
     }
 
-    public List<TripDto> getAll() {
+    public List<TripDto> getAllTrips() {
         return repository.findAll()
                 .stream()
                 .map(mapper::toDto)

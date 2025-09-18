@@ -19,27 +19,27 @@ public class RatingController {
     }
 
     @GetMapping
-    public List<RatingDto> getAll() {
+    public List<RatingDto> getAllRatings() {
         return service.getAllRatings();
     }
 
     @GetMapping("/{id}")
-    public RatingDto getById(@PathVariable Long id) {
+    public RatingDto getRatingById(@PathVariable Long id) {
         return service.getRatingById(id);
     }
 
     @PostMapping
-    public RatingDto create(@RequestBody RatingDto dto) {
+    public RatingDto createRating(@RequestBody RatingDto dto) {
         return service.createRating(dto);
     }
 
     @PutMapping("/{id}")
-    public RatingDto update(@PathVariable Long id, @RequestBody RatingDto dto) {
+    public RatingDto updateRating(@PathVariable Long id, @RequestBody RatingDto dto) {
         return service.updateRating(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteRating(@PathVariable Long id) {
         service.deleteRating(id);
     }
 }
