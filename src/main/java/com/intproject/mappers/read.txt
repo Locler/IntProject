@@ -1,0 +1,12 @@
+
+MapStruct сгенерирует реализацию и пометит её как Spring-компонент, так что в сервисах можно юзать @Autowired / @RequiredArgsConstructor внедрять PassengerMapper, TripMapper и т.д.
+
+1)Почему часть мапперов — interface, а TripMapper/RatingMapper — abstract class
+
+Интерфейсы подходят, когда маппинг — простое поле ↔ поле (Passenger, Car, Driver без специальных ID→entity преобразований). MapStruct генерирует Impl автоматически.
+Абстрактный класс нужен, когда нужно инъектировать репозитории и реализовать helper-методы (например, idToDriver) для преобразования driverId → Driver через getReferenceById. MapStruct сгенерирует реализацию, унаследованную от этого abstract-класса, и она будет использовать внедрённые в абстрактный класс поля.
+
+2)В примерах DTO status — String. MapStruct не автоматически превращает enum ↔ string, поэтому я сделал expression:
+
+Entity → DTO: entity.getStatus().name()
+DTO → Entity: TripStatus.valueOf(dto.getStatus())

@@ -1,6 +1,6 @@
-package com.internproject.entity;
+package com.intproject.entities;
 
-import com.internproject.enums.TripStatus;
+import com.intproject.enums.TripStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

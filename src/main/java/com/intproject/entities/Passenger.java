@@ -1,4 +1,4 @@
-package com.internproject.entity;
+package com.intproject.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

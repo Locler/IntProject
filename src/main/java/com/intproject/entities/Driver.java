@@ -1,7 +1,8 @@
-package com.internproject.entity;
+package com.intproject.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.List;
 
 @Entity

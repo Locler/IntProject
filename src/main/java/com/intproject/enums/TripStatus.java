@@ -1,4 +1,4 @@
-package com.internproject.enums;
+package com.intproject.enums;
 
 public enum TripStatus {
     CREATED,
