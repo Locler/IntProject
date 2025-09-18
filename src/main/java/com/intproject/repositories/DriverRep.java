@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface DriverRep extends JpaRepository<Driver, Long> {
+
     List<Driver> findDriversByDeletedFalse();
+
+    boolean existsDriverByEmail(String email);
 }

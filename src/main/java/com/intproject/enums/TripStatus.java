@@ -6,5 +6,5 @@ public enum TripStatus {
     PICKING_UP,
     ON_THE_WAY,
     COMPLETED,
-    CANCELED
+    CANCELLED
 }

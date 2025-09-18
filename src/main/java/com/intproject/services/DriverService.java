@@ -4,7 +4,6 @@ import com.intproject.dto.DriverDto;
 import com.intproject.entities.Driver;
 import com.intproject.mappers.DriverMapper;
 import com.intproject.repositories.DriverRep;
-import com.intproject.repositories.RatingRep;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,19 +32,33 @@ public class DriverService {
     }
 
     public DriverDto createDriver(DriverDto dto) {
+        if (driverRep.existsDriverByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("Email already used: " + dto.getEmail());
+        }
         return driverMapper.toDto(driverRep.save(driverMapper.toEntity(dto)));
     }
 
     public DriverDto updateDriver(Long id, DriverDto dto) {
-        Driver driver = driverRep.findById(id).orElseThrow(() -> new EntityNotFoundException("Driver not found with id " + id));
+        Driver driver = driverRep.findById(id)
+                .filter(d -> !d.getDeleted())
+                .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
+
         driver.setName(dto.getName());
-        driver.setEmail(dto.getEmail());
         driver.setPhone(dto.getPhone());
+
+        if (!driver.getEmail().equals(dto.getEmail())
+                && driverRep.existsDriverByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("Email already used: " + dto.getEmail());
+        }
+        driver.setEmail(dto.getEmail());
+
         return driverMapper.toDto(driverRep.save(driver));
     }
 
     public void softDeleteDriver(Long id) {
-        Driver driver = driverRep.findById(id).orElseThrow(() -> new EntityNotFoundException("Driver not found with id " + id));
+        Driver driver = driverRep.findById(id)
+                .filter(d -> !d.getDeleted())
+                .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
         driver.setDeleted(true);
         driverRep.save(driver);
     }

@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface PassengerRep extends JpaRepository<Passenger, Long> {
+
     List<Passenger> findPassengersByDeletedFalse();
+
+    boolean existsPassengerByEmail(String email);
 }

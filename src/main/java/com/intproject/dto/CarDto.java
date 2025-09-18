@@ -12,4 +12,6 @@ public class CarDto {
     private String brand;
 
     private String plateNumber;
+
+    private Long driverId;
 }
